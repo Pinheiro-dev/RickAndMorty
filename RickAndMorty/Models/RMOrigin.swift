@@ -1,5 +1,5 @@
 //
-//  Request.swift
+//  RMOrigin.swift
 //  RickAndMorty
 //
 //  Created by mathues barbosa on 02/01/23.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// Object that represents a single API call
-final class Request {
-    
+struct RMOrigin: Codable {
+    let name: String
+    let url: String
 }
 
