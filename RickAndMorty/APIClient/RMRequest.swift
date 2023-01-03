@@ -57,7 +57,7 @@ final class RMRequest {
 
     // MARK: - Public
 
-    /// Construcot request
+    /// Constructor request
     /// - Parameters:
     ///   - endpoint: Target endpoint
     ///   - pathComponents: Collection of Path components
