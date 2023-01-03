@@ -13,4 +13,27 @@ extension UIView {
             self.addSubview($0)
         })
     }
+
+    func roundCorners(_ corners: [UIRectCorner] = [.allCorners], radius: CGFloat) {
+        var maskedCorners: CACornerMask = .init()
+        corners.forEach({ corner in
+            switch corner {
+                case .topLeft:
+                    maskedCorners.insert(.layerMinXMinYCorner)
+                case .topRight:
+                    maskedCorners.insert(.layerMaxXMinYCorner)
+                case .bottomLeft:
+                    maskedCorners.insert(.layerMinXMaxYCorner)
+                case .bottomRight:
+                    maskedCorners.insert(.layerMaxXMaxYCorner)
+                default:
+                    break
+            }
+        })
+
+        self.layer.cornerRadius = radius
+        if !maskedCorners.isEmpty {
+            self.layer.maskedCorners = maskedCorners
+        }
+    }
 }
