@@ -5,16 +5,41 @@
 //  Created by mathues barbosa on 03/01/23.
 //
 
-import Foundation
 import UIKit
 
+protocol RMCharacterListViewViewModelDelegate: AnyObject {
+    func didLoadInitialCharacters()
+}
+
 final class RMCharacterListViewViewModel: NSObject {
-    func fetchCharacters() {
+
+    public weak var delegate: RMCharacterListViewViewModelDelegate?
+
+    private var characters: [RMCharacter] = [] {
+        didSet {
+            characters.forEach({ character in
+                let viewModel = RMCharacterCollectionViewCellViewModel(characterName: character.name,
+                                                                       characterStatus: character.status,
+                                                                       characterImageUrl: URL(string: character.image))
+                cellViewModels.append(viewModel)
+            })
+        }
+    }
+
+    private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
+
+    public func fetchCharacters() {
         RMService.shared.execute(.listCharactersRequests,
-                                 expecting: RMGetAllCharactersResponse.self, completion: { result in
+                                 expecting: RMGetAllCharactersResponse.self,
+                                 completion: { [weak self] result in
             switch result {
-                case .success(let model):
-                    print("Example image url: ", model.results.first?.image ?? "no image")
+                case .success(let responseModel):
+                    let results = responseModel.results
+                    let info = responseModel.info
+                    self?.characters = results
+                    DispatchQueue.main.async {
+                        self?.delegate?.didLoadInitialCharacters()
+                    }
                 case .failure(let error):
                     print(String(describing: error))
             }
@@ -24,7 +49,7 @@ final class RMCharacterListViewViewModel: NSObject {
 
 extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return self.cellViewModels.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -36,11 +61,7 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
             return UICollectionViewCell()
         }
 
-        let viewModel = RMCharacterCollectionViewCellViewModel(characterName: "Pinheiro",
-                                                               characterStatus: .unknown,
-                                                               characterImageUrl: URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
-        cell.cofigure(with: viewModel)
-
+        cell.cofigure(with: cellViewModels[indexPath.row])
         return cell
     }
 

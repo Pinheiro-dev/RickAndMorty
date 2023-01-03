@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class RMCharacterCollectionViewCellViewModel {
     public let characterName: String
@@ -23,7 +24,11 @@ final class RMCharacterCollectionViewCellViewModel {
     }
 
     public var characterStatusText: String {
-        return characterStatus.rawValue
+        return characterStatus.text
+    }
+
+    public var characterStatusColor: UIColor {
+        return characterStatus.color
     }
 
     public func fetchImage(completion: @escaping (Result<Data, Error>) -> Void) {
