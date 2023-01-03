@@ -9,7 +9,7 @@ import Foundation
 
 
 /// Represents unique API endpoint
-@frozen enum RMEndPoint: String {
+@frozen enum RMEndpoint: String {
     /// Enpoint to get character info
     case character
     /// Enpoint to get location info
