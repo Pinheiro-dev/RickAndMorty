@@ -14,15 +14,15 @@ final class RMCharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
-        self.title = "Characters"
-
-        self.setupView()
-        self.setupLayot()
+        view.backgroundColor = .systemBackground
+        title = "Characters"
+        characterListView.delegate = self
+        setupView()
+        setupLayot()
     }
 
     func setupView() {
-        self.view.addSubview(characterListView)
+        view.addSubview(characterListView)
     }
 
     func setupLayot() {
@@ -34,4 +34,18 @@ final class RMCharacterViewController: UIViewController {
         ])
     }
     
+}
+
+// MARK: - RMCharacterListViewDelegate
+
+extension RMCharacterViewController: RMCharacterListViewDelegate {
+    func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {
+        // Open detail controller for that character
+        let viewModel = RMCharacterDetailViewViewModel(character: character)
+        let detailVC = RMCharacterDetailViewController(viewModel: viewModel)
+        detailVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+
+
 }

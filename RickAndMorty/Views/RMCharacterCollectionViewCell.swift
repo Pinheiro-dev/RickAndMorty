@@ -15,6 +15,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.roundCorners([.topLeft, .topRight], radius: 10)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
