@@ -59,8 +59,7 @@ final class RMCharacterListView: UIView {
     }
 
     private func setupViews() {
-        self.addSubviews(spinner,
-                        collectionView)
+        self.addSubviews(collectionView, spinner)
     }
 
     private func addConstraints() {
