@@ -13,7 +13,6 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Location"
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .medium)
         return label
@@ -22,8 +21,8 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Earth"
-        label.font = .systemFont(ofSize: 22, weight: .light)
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 20, weight: .light)
         return label
     }()
 
@@ -31,7 +30,6 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: "globe.americas")
         return imageView
     }()
 
@@ -77,23 +75,29 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
             iconImageView.heightAnchor.constraint(equalToConstant: 30),
             iconImageView.widthAnchor.constraint(equalToConstant: 30),
             iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 35),
-            iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+            iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
 
             valueLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 10),
             valueLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
-            valueLabel.topAnchor.constraint(equalTo: iconImageView.topAnchor),
-            valueLabel.bottomAnchor.constraint(equalTo: iconImageView.bottomAnchor),
+            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            valueLabel.bottomAnchor.constraint(equalTo: titleContainerView.topAnchor)
         ])
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-//        titleLabel.text = nil
-//        valueLabel.text = nil
-//        iconImageView.image = nil
+        titleLabel.text = nil
+        valueLabel.text = nil
+        iconImageView.image = nil
+        iconImageView.tintColor = .label
+        titleLabel.textColor = .label
     }
 
     public func configure(with viewModel: RMCharacterInfoCollectionViewCellViewModel) {
-
+        titleLabel.text = viewModel.title
+        valueLabel.text = viewModel.displayValue
+        iconImageView.image = viewModel.iconImage
+        iconImageView.tintColor = viewModel.tintColor
+        titleLabel.textColor = viewModel.tintColor
     }
 }
