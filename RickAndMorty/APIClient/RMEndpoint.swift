@@ -15,5 +15,5 @@ import Foundation
     /// Enpoint to get location info
     case location
     /// Enpoint to get episode info
-    case espisode
+    case episode
 }

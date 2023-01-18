@@ -12,6 +12,8 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .systemBlue
+        contentView.roundCorners(radius: 8)
         setUpViews()
         addConstraints()
     }
@@ -33,6 +35,11 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
     }
 
     public func configure(with viewModel: RMCharacterEpisodeCollectionViewCellViewModel) {
-
+        viewModel.registerForData { data in
+            print(data.name)
+            print(data.airDate)
+            print(data.episode)
+        }
+        viewModel.fetchEpisode()
     }
 }
