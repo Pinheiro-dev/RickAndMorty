@@ -14,7 +14,7 @@ final class RMImageLoaderManager {
 
     private init() {}
 
-    /// Get iamge content with URL
+    /// Get image content with URL
     /// - Parameters:
     ///   - url: Source url
     ///   - completion: Callback
