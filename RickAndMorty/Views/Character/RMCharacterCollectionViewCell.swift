@@ -106,7 +106,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         self.statusLabel.text = nil
     }
 
-    public func cofigure(with viewModel: RMCharacterCollectionViewCellViewModel) {
+    public func configure(with viewModel: RMCharacterCollectionViewCellViewModel) {
         nameLabel.text = viewModel.characterName
         statusLabel.text = viewModel.characterStatusText
         statusView.backgroundColor = viewModel.characterStatusColor
