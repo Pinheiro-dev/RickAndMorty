@@ -17,21 +17,29 @@ final class RMEpisodeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "Episodes"
         episodeListView.delegate = self
-        setupView()
-        setupLayot()
+        setUpView()
+        addConstraints()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
+                                                            target: self,
+                                                            action: #selector(didTapSearch))
     }
 
-    func setupView() {
+    func setUpView() {
         view.addSubview(episodeListView)
     }
 
-    func setupLayot() {
+    func addConstraints() {
         NSLayoutConstraint.activate([
             episodeListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             episodeListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             episodeListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             episodeListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+
+    @objc
+    private func didTapSearch() {
+
     }
 
 }

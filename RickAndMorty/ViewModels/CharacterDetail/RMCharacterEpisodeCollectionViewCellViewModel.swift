@@ -5,8 +5,7 @@
 //  Created by mathues barbosa on 13/01/23.
 //
 
-import Foundation
-
+import UIKit
 
 protocol RMEpisodeDataRender {
     var name: String { get }
@@ -19,6 +18,8 @@ final class RMCharacterEpisodeCollectionViewCellViewModel {
     private var isFetching = false
     private var dataBlock: ((RMEpisodeDataRender) -> Void)?
 
+    public let borderColor: UIColor
+
     private var episode: RMEpisode? {
         didSet {
             guard let model = episode else { return }
@@ -26,13 +27,13 @@ final class RMCharacterEpisodeCollectionViewCellViewModel {
         }
 
     }
-
-    init(episodeDataUrl: URL?) {
+    // MARK: - Init
+    init(episodeDataUrl: URL?, borderColor: UIColor = .systemBlue) {
         self.episodeDataUrl = episodeDataUrl
+        self.borderColor = borderColor
     }
 
     //MARK: - Public func
-
     public func registerForData(_ block: @escaping(RMEpisodeDataRender) -> Void) {
         self.dataBlock = block
     }

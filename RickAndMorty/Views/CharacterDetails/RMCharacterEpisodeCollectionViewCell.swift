@@ -37,15 +37,18 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .tertiarySystemBackground
-        contentView.layer.borderWidth = 2
-        contentView.layer.borderColor = UIColor.systemBlue.cgColor
-        contentView.roundCorners(radius: 8)
+        setUpLayer()
         setUpViews()
         addConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
+    }
+
+    private func setUpLayer() {
+        contentView.layer.borderWidth = 2
+        contentView.roundCorners(radius: 8)
     }
 
     private func setUpViews() {
@@ -85,5 +88,6 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
             self?.airDateLabel.text = "Aired on " + data.airDate
         }
         viewModel.fetchEpisode()
+        contentView.layer.borderColor = viewModel.borderColor.cgColor
     }
 }

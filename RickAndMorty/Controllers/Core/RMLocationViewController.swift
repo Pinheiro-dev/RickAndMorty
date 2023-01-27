@@ -12,8 +12,22 @@ final class RMLocationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
-        self.title = "Locations"
+        view.backgroundColor = .systemBackground
+        title = "Locations"
+        setUpView()
+        addConstraints()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
+                                                            target: self,
+                                                            action: #selector(didTapSearch))
+    }
+
+    func setUpView() {}
+
+    func addConstraints() {}
+
+    @objc
+    private func didTapSearch() {
+
     }
 
 }
