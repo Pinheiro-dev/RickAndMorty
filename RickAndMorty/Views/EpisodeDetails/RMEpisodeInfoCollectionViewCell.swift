@@ -10,11 +10,27 @@ import UIKit
 final class RMEpisodeInfoCollectionViewCell: UICollectionViewCell {
     static let cellIdentifier = "RMEpisodeInfoCollectionViewCell"
 
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let valueLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20, weight: .regular)
+        label.textAlignment = .right
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .secondarySystemBackground
-        setUpLayer()
         setUpViews()
+        setUpLayer()
         addContraints()
     }
 
@@ -22,8 +38,8 @@ final class RMEpisodeInfoCollectionViewCell: UICollectionViewCell {
         fatalError("Unsupported")
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
+    private func setUpViews() {
+        contentView.addSubviews(titleLabel, valueLabel)
     }
 
     private func setUpLayer() {
@@ -33,15 +49,28 @@ final class RMEpisodeInfoCollectionViewCell: UICollectionViewCell {
         layer.borderColor = UIColor.secondaryLabel.cgColor
     }
 
-    private func setUpViews() {
+    private func addContraints() {
+        NSLayoutConstraint.activate([
+            titleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.47),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
 
+            valueLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.47),
+            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            valueLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+            valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+        ])
     }
 
-    private func addContraints() {
-
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+        valueLabel.text = nil
     }
 
     public func configure(with viewModel: RMEpisodeInfoCollectionViewCellViewModel) {
-
+        titleLabel.text = viewModel.title
+        valueLabel.text = viewModel.value
     }
 }

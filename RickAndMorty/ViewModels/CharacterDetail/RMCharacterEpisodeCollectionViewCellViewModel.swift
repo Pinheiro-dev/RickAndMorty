@@ -19,6 +19,7 @@ final class RMCharacterEpisodeCollectionViewCellViewModel {
     private var dataBlock: ((RMEpisodeDataRender) -> Void)?
 
     public let borderColor: UIColor
+    public let backgroundColor: UIColor
 
     private var episode: RMEpisode? {
         didSet {
@@ -28,9 +29,12 @@ final class RMCharacterEpisodeCollectionViewCellViewModel {
 
     }
     // MARK: - Init
-    init(episodeDataUrl: URL?, borderColor: UIColor = .secondarySystemBackground) {
+    init(episodeDataUrl: URL?,
+         borderColor: UIColor = .secondarySystemBackground,
+         backgroundColor: UIColor = .tertiarySystemBackground) {
         self.episodeDataUrl = episodeDataUrl
         self.borderColor = borderColor
+        self.backgroundColor = backgroundColor
     }
 
     //MARK: - Public func

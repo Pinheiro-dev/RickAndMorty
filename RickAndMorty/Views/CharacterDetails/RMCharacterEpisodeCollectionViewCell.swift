@@ -47,7 +47,7 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
     }
 
     private func setUpLayer() {
-        contentView.layer.borderWidth = 3
+        contentView.layer.borderWidth = 2
         contentView.roundCorners(radius: 8)
     }
 
@@ -79,6 +79,8 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
         seasonLabel.text = nil
         nameLabel.text = nil
         airDateLabel.text = nil
+        contentView.layer.borderColor = nil
+        contentView.backgroundColor = nil
     }
 
     public func configure(with viewModel: RMCharacterEpisodeCollectionViewCellViewModel) {
@@ -89,5 +91,6 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
         }
         viewModel.fetchEpisode()
         contentView.layer.borderColor = viewModel.borderColor.cgColor
+        contentView.backgroundColor = viewModel.backgroundColor
     }
 }
