@@ -244,9 +244,8 @@
 				06C3AE86298420F100F96E1E /* EpisodeDetail */,
 				060952452971D5D600C05F40 /* CharacterDetail */,
 				0618C9502964980800A9C63D /* RMCharacterListViewViewModel.swift */,
-				06E04F87297B19F7004C6C0E /* RMEpisodeListViewViewModel.swift */,
 				06EB2CAF2964B040002FE084 /* RMCharacterCollectionViewCellViewModel.swift */,
-				06E04F80297B1078004C6C0E /* RMEpisodeDetailViewViewModel.swift */,
+				06E04F87297B19F7004C6C0E /* RMEpisodeListViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -371,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				06C3AE872984211A00F96E1E /* RMEpisodeInfoCollectionViewCellViewModel.swift */,
+				06E04F80297B1078004C6C0E /* RMEpisodeDetailViewViewModel.swift */,
 			);
 			path = EpisodeDetail;
 			sourceTree = "<group>";
