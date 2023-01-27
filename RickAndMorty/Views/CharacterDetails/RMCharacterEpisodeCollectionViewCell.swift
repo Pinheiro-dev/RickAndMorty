@@ -47,7 +47,7 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
     }
 
     private func setUpLayer() {
-        contentView.layer.borderWidth = 2
+        contentView.layer.borderWidth = 3
         contentView.roundCorners(radius: 8)
     }
 

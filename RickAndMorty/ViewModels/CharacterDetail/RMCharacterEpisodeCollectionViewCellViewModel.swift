@@ -28,7 +28,7 @@ final class RMCharacterEpisodeCollectionViewCellViewModel {
 
     }
     // MARK: - Init
-    init(episodeDataUrl: URL?, borderColor: UIColor = .systemBlue) {
+    init(episodeDataUrl: URL?, borderColor: UIColor = .secondarySystemBackground) {
         self.episodeDataUrl = episodeDataUrl
         self.borderColor = borderColor
     }
