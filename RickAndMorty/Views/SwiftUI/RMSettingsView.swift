@@ -23,7 +23,7 @@ struct RMSettingsView: View {
                         .renderingMode(.template)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20)
-                        .padding(8)
+                        .padding(5)
                         .foregroundColor(.white)
                         .background(Color(viewModel.iconContainerColor))
                         .cornerRadius(6)

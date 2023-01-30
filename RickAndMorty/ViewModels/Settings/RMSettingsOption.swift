@@ -50,24 +50,24 @@ enum RMSettingsOption: CaseIterable {
             case .viewSeries:
                 return "View Video Series"
             case .viewCode:
-                return "View App code"
+                return "View App Code"
         }
     }
 
     var iconContainerColor: UIColor {
         switch self {
             case .rateApp:
-                return .systemBlue
-            case .contactUs:
-                return .systemGreen
-            case .terms:
-                return .systemRed
-            case .privacy:
-                return .systemYellow
-            case .apiReference:
                 return .systemOrange
+            case .contactUs:
+                return .systemBlue
+            case .terms:
+                return .systemGray
+            case .privacy:
+                return .systemGray
+            case .apiReference:
+                return .systemIndigo
             case .viewSeries:
-                return .systemPurple
+                return .systemRed
             case .viewCode:
                 return .systemPink
         }
@@ -78,15 +78,15 @@ enum RMSettingsOption: CaseIterable {
             case .rateApp:
                 return UIImage(systemName: "star.fill")
             case .contactUs:
-                return UIImage(systemName: "paperplane")
+                return UIImage(systemName: "paperplane.fill")
             case .terms:
-                return UIImage(systemName: "doc")
+                return UIImage(systemName: "doc.fill")
             case .privacy:
-                return UIImage(systemName: "lock")
+                return UIImage(systemName: "lock.fill")
             case .apiReference:
-                return UIImage(systemName: "bookmark.square")
+                return UIImage(systemName: "bookmark.fill")
             case .viewSeries:
-                return UIImage(systemName: "tv")
+                return UIImage(systemName: "play.tv.fill")
             case .viewCode:
                 return UIImage(systemName: "chevron.left.forwardslash.chevron.right")
         }
