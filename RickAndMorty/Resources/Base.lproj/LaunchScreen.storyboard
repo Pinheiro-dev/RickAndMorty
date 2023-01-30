@@ -16,29 +16,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rick And Morty App" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQh-OY-gBB">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rick-morty-launch-screen" translatesAutoresizingMaskIntoConstraints="NO" id="1Wv-h2-PfO">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemGreenColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TQh-OY-gBB" secondAttribute="trailing" id="1Vk-0l-jgl"/>
-                            <constraint firstItem="TQh-OY-gBB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4if-kF-Eez"/>
-                            <constraint firstItem="TQh-OY-gBB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ySq-g1-ZXe"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TQh-OY-gBB" secondAttribute="bottom" id="yjd-tf-TI4"/>
+                            <constraint firstItem="1Wv-h2-PfO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Dkq-7J-WTr"/>
+                            <constraint firstItem="1Wv-h2-PfO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-59" id="HWC-jC-RJX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1Wv-h2-PfO" secondAttribute="bottom" constant="-34" id="lyx-0p-E9u"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1Wv-h2-PfO" secondAttribute="trailing" id="p5h-Bp-DUC"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="352" y="-1"/>
+            <point key="canvasLocation" x="351.90839694656489" y="-1.4084507042253522"/>
         </scene>
     </scenes>
     <resources>
+        <image name="rick-morty-launch-screen" width="1280" height="1920"/>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
