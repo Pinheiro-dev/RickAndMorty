@@ -22,6 +22,8 @@ final class RMLocationViewController: UIViewController {
         title = "Locations"
         setUpView()
         addConstraints()
+        viewModel.delegate = self
+        viewModel.fetchLocations()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
                                                             target: self,
                                                             action: #selector(didTapSearch))
@@ -43,6 +45,15 @@ final class RMLocationViewController: UIViewController {
     @objc
     private func didTapSearch() {
 
+    }
+
+}
+
+// MARK: - LocationViewModel Delegate
+
+extension RMLocationViewController: RMLocationViewViewModelDelegate {
+    func didFetchInitialLocations() {
+        primaryView.configure(with: viewModel)
     }
 
 }
