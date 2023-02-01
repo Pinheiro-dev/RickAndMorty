@@ -16,7 +16,7 @@ struct RMLocationTableViewCellViewModel {
     }
 
     public var name: String {
-        return location.name
+        return "Type: " + location.name
     }
 
     public var type: String {
