@@ -31,7 +31,7 @@ final class RMNoSearchResultView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        isHidden = false
+        isHidden = true
         translatesAutoresizingMaskIntoConstraints = false
         setUpViews()
         addConstraints()
