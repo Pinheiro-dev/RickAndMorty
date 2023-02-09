@@ -13,12 +13,7 @@ enum RMCharacterStatus: String, Codable {
     case `unknown` = "unknown"
 
     var text: String {
-        switch self {
-            case .alive, .dead:
-                return rawValue
-            case .unknown:
-                return "Unknown"
-        }
+        return rawValue.capitalized
     }
 
     var color: UIColor {
