@@ -73,8 +73,8 @@ final class RMSearchInputView: UIView {
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            stackView.leftAnchor.constraint(equalTo: leftAnchor),
-            stackView.rightAnchor.constraint(equalTo: rightAnchor),
+            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
+            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
