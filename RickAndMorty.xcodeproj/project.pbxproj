@@ -22,6 +22,7 @@
 		06053BBB29635EA600B9AB93 /* RMLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06053BBA29635EA600B9AB93 /* RMLocationViewController.swift */; };
 		06053BBD29635EB600B9AB93 /* RMEpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06053BBC29635EB600B9AB93 /* RMEpisodeViewController.swift */; };
 		06053BBF29635ED100B9AB93 /* RMSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06053BBE29635ED100B9AB93 /* RMSettingsViewController.swift */; };
+		0608D2F629958721007AF60F /* RMSearchOptionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0608D2F529958721007AF60F /* RMSearchOptionPickerViewController.swift */; };
 		060935BC298730C60071B894 /* RMSettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060935BB298730C60071B894 /* RMSettingsViewViewModel.swift */; };
 		060935BE298731230071B894 /* RMSettingsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060935BD298731230071B894 /* RMSettingsCellViewModel.swift */; };
 		060935C0298731C80071B894 /* RMSettingsOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060935BF298731C80071B894 /* RMSettingsOption.swift */; };
@@ -113,6 +114,7 @@
 		06053BBA29635EA600B9AB93 /* RMLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationViewController.swift; sourceTree = "<group>"; };
 		06053BBC29635EB600B9AB93 /* RMEpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeViewController.swift; sourceTree = "<group>"; };
 		06053BBE29635ED100B9AB93 /* RMSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsViewController.swift; sourceTree = "<group>"; };
+		0608D2F529958721007AF60F /* RMSearchOptionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchOptionPickerViewController.swift; sourceTree = "<group>"; };
 		060935BB298730C60071B894 /* RMSettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsViewViewModel.swift; sourceTree = "<group>"; };
 		060935BD298731230071B894 /* RMSettingsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsCellViewModel.swift; sourceTree = "<group>"; };
 		060935BF298731C80071B894 /* RMSettingsOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsOption.swift; sourceTree = "<group>"; };
@@ -336,6 +338,15 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		0608D2F729958889007AF60F /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				06C3AE812984089800F96E1E /* RMSearchViewController.swift */,
+				0608D2F529958721007AF60F /* RMSearchOptionPickerViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		060935BA298730470071B894 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,9 +433,9 @@
 		0631AE8D2964F8B00080EF23 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				0608D2F729958889007AF60F /* Search */,
 				0631AE8E2964F8EA0080EF23 /* RMCharacterDetailViewController.swift */,
 				06E04F7C297B03FE004C6C0E /* RMEpisodeDetailViewController.swift */,
-				06C3AE812984089800F96E1E /* RMSearchViewController.swift */,
 				0643BC40298ACBC100CB9D27 /* RMLocationDetailViewController.swift */,
 			);
 			path = Other;
@@ -669,6 +680,7 @@
 				0643BC44298ADDCA00CB9D27 /* RMLocationDetailView.swift in Sources */,
 				0643BC50298B031300CB9D27 /* RMNoSearchResultViewViewModel.swift in Sources */,
 				061ACA04298AA37000EBD153 /* RMLocationTableViewCellViewModel.swift in Sources */,
+				0608D2F629958721007AF60F /* RMSearchOptionPickerViewController.swift in Sources */,
 				0643BC4D298B02E300CB9D27 /* RMNoSearchResultView.swift in Sources */,
 				06E04F7D297B03FE004C6C0E /* RMEpisodeDetailViewController.swift in Sources */,
 				06E04F83297B1111004C6C0E /* RMEpisodeDetailView.swift in Sources */,
