@@ -53,7 +53,7 @@ final class RMCharacterDetailViewViewModel {
     }
 
     public var title: String {
-        character.name.uppercased()
+        character.name
     }
 
     // MARK: - Layouts
