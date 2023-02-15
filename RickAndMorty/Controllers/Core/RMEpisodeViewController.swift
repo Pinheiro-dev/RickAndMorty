@@ -30,10 +30,10 @@ final class RMEpisodeViewController: UIViewController {
 
     func addConstraints() {
         NSLayoutConstraint.activate([
-            episodeListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            episodeListView.topAnchor.constraint(equalTo: view.topAnchor),
             episodeListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             episodeListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            episodeListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            episodeListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 

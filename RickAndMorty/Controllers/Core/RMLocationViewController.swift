@@ -36,10 +36,10 @@ final class RMLocationViewController: UIViewController {
 
     func addConstraints() {
         NSLayoutConstraint.activate([
-            primaryView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            primaryView.topAnchor.constraint(equalTo: view.topAnchor),
             primaryView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             primaryView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            primaryView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            primaryView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 

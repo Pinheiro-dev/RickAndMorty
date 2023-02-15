@@ -49,10 +49,10 @@ final class RMSettingsViewController: UIViewController {
 
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            settingsSwiftUIController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            settingsSwiftUIController.view.topAnchor.constraint(equalTo: view.topAnchor),
             settingsSwiftUIController.view.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             settingsSwiftUIController.view.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            settingsSwiftUIController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            settingsSwiftUIController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 

@@ -45,10 +45,10 @@ final class RMEpisodeDetailViewController: UIViewController {
 
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            detailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailView.topAnchor.constraint(equalTo: view.topAnchor),
             detailView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             detailView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 

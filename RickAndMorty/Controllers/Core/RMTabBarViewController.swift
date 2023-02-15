@@ -12,6 +12,7 @@ final class RMTabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBar.isTranslucent = true
         self.setUpTabViewControllers()
     }
 
@@ -54,6 +55,7 @@ final class RMTabBarViewController: UITabBarController {
 
         navigationsController.forEach{ navigation in
             navigation.navigationBar.prefersLargeTitles = true
+            navigation.navigationBar.isTranslucent = true
         }
 
         self.setViewControllers(navigationsController, animated: true)

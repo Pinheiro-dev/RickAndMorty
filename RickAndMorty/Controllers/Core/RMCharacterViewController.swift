@@ -30,10 +30,10 @@ final class RMCharacterViewController: UIViewController {
 
     func setupLayot() {
         NSLayoutConstraint.activate([
-            characterListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            characterListView.topAnchor.constraint(equalTo: view.topAnchor),
             characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            characterListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 
