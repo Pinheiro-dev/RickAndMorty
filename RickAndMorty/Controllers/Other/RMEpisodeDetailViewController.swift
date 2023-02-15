@@ -28,7 +28,6 @@ final class RMEpisodeDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Episode"
         setUpViews()
         addConstraints()
         detailView.delegate = self
@@ -62,6 +61,7 @@ final class RMEpisodeDetailViewController: UIViewController {
 
 extension RMEpisodeDetailViewController: RMEpisodeDetailViewViewModelDelegate {
     func didFetchEpisodeDetals() {
+        title = viewModel.title
         detailView.configure(with: viewModel)
     }
 }

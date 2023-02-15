@@ -28,6 +28,7 @@ final class RMEpisodeDetailViewViewModel {
     public weak var delegate: RMEpisodeDetailViewViewModelDelegate?
 
     public private(set) var cellViewModels: [SectionType] = []
+    public var title: String = "Episode"
 
     // MARK: - Init
 
@@ -74,6 +75,7 @@ final class RMEpisodeDetailViewViewModel {
             createdString = RMCharacterInfoCollectionViewCellViewModel.shortDateFormatter.string(from: date)
         }
 
+        title = episode.name
         cellViewModels = [
             .informations(viewModel: [
                 .init(title: "Episode Name", value: episode.name),
