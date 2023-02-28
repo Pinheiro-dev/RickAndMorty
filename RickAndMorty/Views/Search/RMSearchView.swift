@@ -10,6 +10,9 @@ import UIKit
 protocol RMSearchViewDelegate: AnyObject {
     func rmSearchView(_ searchView: RMSearchView,
                       didSelectOption option: RMSearchInputViewViewModel.DynamicOption)
+    func rmSearchView(_ inputView: RMSearchView,
+                           didChangeSearchText text: String)
+    func rmSearchViewDidTapSearchKeyboardButton(_ inputView: RMSearchView)
 }
 
 final class RMSearchView: UIView {
@@ -93,5 +96,12 @@ extension RMSearchView: RMSearchInputViewDelegate {
         delegate?.rmSearchView(self, didSelectOption: option)
     }
 
+    func rmSearchInputView(_ inputView: RMSearchInputView, didChangeSearchText text: String) {
+        delegate?.rmSearchView(self, didChangeSearchText: text)
+    }
+
+    func rmSearchInputViewDidTapSearchKeyboardButton(_ inputView: RMSearchInputView) {
+        delegate?.rmSearchViewDidTapSearchKeyboardButton(self)
+    }
 
 }

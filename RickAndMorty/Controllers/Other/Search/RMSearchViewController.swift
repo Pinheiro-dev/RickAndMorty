@@ -111,4 +111,12 @@ extension RMSearchViewController: RMSearchViewDelegate {
         vc.sheetPresentationController?.prefersGrabberVisible = true
         present(vc, animated: true)
     }
+
+    func rmSearchView(_ inputView: RMSearchView, didChangeSearchText text: String) {
+        viewModel.set(query: text)
+    }
+
+    func rmSearchViewDidTapSearchKeyboardButton(_ inputView: RMSearchView) {
+        viewModel.executeSearch()
+    }
 }

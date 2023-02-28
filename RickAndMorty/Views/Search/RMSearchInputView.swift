@@ -10,8 +10,12 @@ import UIKit
 protocol RMSearchInputViewDelegate: AnyObject {
     func rmSearchInputView(_ inputView: RMSearchInputView,
                            didSelectOption option: RMSearchInputViewViewModel.DynamicOption)
+    func rmSearchInputView(_ inputView: RMSearchInputView,
+                           didChangeSearchText text: String)
+    func rmSearchInputViewDidTapSearchKeyboardButton(_ inputView: RMSearchInputView)
 }
 
+/// View for top part of search screen with search bar
 final class RMSearchInputView: UIView {
 
     weak var delegate: RMSearchInputViewDelegate?
@@ -52,6 +56,7 @@ final class RMSearchInputView: UIView {
 
     private func setUpViews() {
         addSubviews(searchBar)
+        searchBar.delegate = self
     }
 
     private func addConstraints() {
@@ -144,4 +149,20 @@ final class RMSearchInputView: UIView {
             for: .normal
         )
     }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension RMSearchInputView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        delegate?.rmSearchInputView(self, didChangeSearchText: searchText)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //Execute search
+        searchBar.resignFirstResponder()
+        delegate?.rmSearchInputViewDidTapSearchKeyboardButton(self)
+    }
+    
 }
