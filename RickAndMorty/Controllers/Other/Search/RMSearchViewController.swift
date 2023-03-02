@@ -28,6 +28,17 @@ final class RMSearchViewController: UIViewController {
                 }
             }
 
+            var searchResultResponseType: Any.Type {
+                switch self {
+                    case .character:
+                        return RMGetAllCharactersResponse.self
+                    case .location:
+                        return RMGetAllLocationsResponse.self
+                    case .episode:
+                        return RMGetAllEpisodesResponse.self
+                }
+            }
+
             var title: String {
                 switch self {
                     case .character:
