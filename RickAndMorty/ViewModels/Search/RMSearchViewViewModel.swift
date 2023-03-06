@@ -13,6 +13,7 @@ final class RMSearchViewViewModel {
     private var optionMap: [RMSearchInputViewViewModel.DynamicOption: String] = [:]
     private var optionMapUpdateBlock: (((RMSearchInputViewViewModel.DynamicOption, String)) -> Void)?
     private var searchResultHandler: ((RMSearchResultViewModel) -> Void)?
+    private var noResulstHandler: (() -> Void)?
     private var searchText = ""
 
     // MARK: - Init
@@ -25,6 +26,10 @@ final class RMSearchViewViewModel {
 
     public func registerSearchResultHandler(_ block: @escaping (RMSearchResultViewModel) -> Void) {
         self.searchResultHandler = block
+    }
+
+    public func registerNoResultsHandler(_ block: @escaping () -> Void) {
+        self.noResulstHandler = block
     }
 
     public func set(query text: String) {
@@ -56,6 +61,18 @@ final class RMSearchViewViewModel {
 
     }
 
+    public func set(value: String, for option: RMSearchInputViewViewModel.DynamicOption) {
+        optionMap[option] = value
+        let tuple = (option, value)
+        optionMapUpdateBlock?(tuple)
+    }
+
+    public func registerOptionChangeBlock(_ block: @escaping ((RMSearchInputViewViewModel.DynamicOption, String)) -> Void) {
+        self.optionMapUpdateBlock = block
+    }
+
+    // MARK: - Private
+
     private func makeSearchAPICall<T: Codable>(_ type: T.Type, request: RMRequest) {
         RMService.shared.execute(request,
                                  expecting: type) { [weak self] result in
@@ -65,6 +82,7 @@ final class RMSearchViewViewModel {
                     self?.processSearchResults(model: model)
                 case .failure(let error):
                     print(String(describing: error))
+                    self?.handleNoResults()
             }
         }
     }
@@ -91,18 +109,13 @@ final class RMSearchViewViewModel {
             self.searchResultHandler?(results)
         } else {
             // Fallback error
+            handleNoResults()
         }
 
     }
 
-    public func set(value: String, for option: RMSearchInputViewViewModel.DynamicOption) {
-        optionMap[option] = value
-        let tuple = (option, value)
-        optionMapUpdateBlock?(tuple)
-    }
-
-    public func registerOptionChangeBlock(_ block: @escaping ((RMSearchInputViewViewModel.DynamicOption, String)) -> Void) {
-        self.optionMapUpdateBlock = block
+    private func handleNoResults() {
+        self.noResulstHandler?()
     }
 
 }
