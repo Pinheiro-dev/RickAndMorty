@@ -123,6 +123,12 @@ extension RMSearchViewController: RMSearchViewDelegate {
         present(vc, animated: true)
     }
 
+    func rmSearchView(_ searchView: RMSearchView, didSelectLocation location: RMLocation) {
+        let vc = RMLocationDetailViewController(location: location)
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
     func rmSearchView(_ inputView: RMSearchView, didChangeSearchText text: String) {
         viewModel.set(query: text)
     }

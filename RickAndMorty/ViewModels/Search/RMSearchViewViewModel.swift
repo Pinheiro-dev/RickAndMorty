@@ -15,6 +15,7 @@ final class RMSearchViewViewModel {
     private var searchResultHandler: ((RMSearchResultViewModel) -> Void)?
     private var noResulstHandler: (() -> Void)?
     private var searchText = ""
+    private var searchResultModel: Codable?
 
     // MARK: - Init
 
@@ -71,6 +72,13 @@ final class RMSearchViewViewModel {
         self.optionMapUpdateBlock = block
     }
 
+    public func locationSearchResult(at index: Int) -> RMLocation? {
+        guard let searchModel = searchResultModel as? RMGetAllLocationsResponse else {
+            return nil
+        }
+        return searchModel.results[index]
+    }
+
     // MARK: - Private
 
     private func makeSearchAPICall<T: Codable>(_ type: T.Type, request: RMRequest) {
@@ -106,6 +114,7 @@ final class RMSearchViewViewModel {
         }
 
         if let results = resultVM {
+            self.searchResultModel = model
             self.searchResultHandler?(results)
         } else {
             // Fallback error
