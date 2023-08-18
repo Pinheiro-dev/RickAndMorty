@@ -103,7 +103,7 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
                 return cell
             case .episodes(let viewModel):
                 guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIndetifer,
+                    withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier,
                     for: indexPath
                 ) as? RMCharacterEpisodeCollectionViewCell else {
                     return UICollectionViewCell()
