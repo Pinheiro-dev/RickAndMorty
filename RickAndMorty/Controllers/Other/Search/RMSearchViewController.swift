@@ -104,6 +104,7 @@ final class RMSearchViewController: UIViewController {
 
     @objc
     private func didTapExecuteSearch() {
+        searchView.hideKeyboard()
         viewModel.executeSearch()
     }
 

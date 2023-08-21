@@ -135,6 +135,10 @@ final class RMSearchInputView: UIView {
         searchBar.becomeFirstResponder()
     }
 
+    public func hideKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+
     public func update(option: RMSearchInputViewViewModel.DynamicOption, value: String) {
         guard let buttons = stackView?.arrangedSubviews as? [UIButton],
               let allOptions = viewModel?.options,

@@ -97,6 +97,10 @@ final class RMSearchView: UIView {
         searchInputView.presentKeyboard()
     }
 
+    public func hideKeyboard() {
+        searchInputView.hideKeyboard()
+    }
+
 }
 
 // MARK: - CollectionView 
