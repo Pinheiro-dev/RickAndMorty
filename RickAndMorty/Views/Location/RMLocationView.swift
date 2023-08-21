@@ -23,6 +23,13 @@ final class RMLocationView: UIView {
             UIView.animate(withDuration: 0.3) {
                 self.tableView.alpha = 1
             }
+
+            viewModel?.registerDidFinishPaginationBlock { [weak self] in
+                DispatchQueue.main.async {
+                    self?.tableView.tableFooterView = nil
+                    self?.tableView.reloadData()
+                }
+            }
         }
     }
 
@@ -136,11 +143,7 @@ extension RMLocationView: UIScrollViewDelegate {
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 DispatchQueue.main.async {
                     self?.showLoadingIndicator()
-                }
-                viewModel.fetchAddtionalLocations()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    print("Refreshing table")
-                    self?.tableView.reloadData()
+                    viewModel.fetchAddtionalLocations()
                 }
             }
             t.invalidate()
