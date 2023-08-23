@@ -35,8 +35,8 @@ final class RMTableLoadingFooterView: UIView {
 
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            spinner.heightAnchor.constraint(equalToConstant: 100),
-            spinner.widthAnchor.constraint(equalToConstant: 100),
+            spinner.heightAnchor.constraint(equalToConstant: 50),
+            spinner.widthAnchor.constraint(equalToConstant: 50),
             spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
 
