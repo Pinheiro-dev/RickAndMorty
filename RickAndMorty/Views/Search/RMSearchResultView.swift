@@ -207,6 +207,30 @@ extension RMSearchResultView:  UICollectionViewDataSource, UICollectionViewDeleg
         }
     }
 
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter,
+              let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier,
+                for: indexPath
+              ) as? RMFooterLoadingCollectionReusableView else {
+            return UICollectionReusableView()
+        }
+        if let viewModel = viewModel,
+           viewModel.shouldShowLoadMoreIndicator {
+            footer.startAnimating()
+        }
+        return footer
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard let viewModel = viewModel,
+              viewModel.shouldShowLoadMoreIndicator else {
+            return .zero
+        }
+        return CGSize(width: collectionView.frame.width, height: 100)
+    }
+
 }
 
 // MARK: - Scrollview delegate
@@ -216,11 +240,31 @@ extension RMSearchResultView: UIScrollViewDelegate {
         if !locationCellViewModels.isEmpty {
             handleLocationPagination(scrollView: scrollView)
         } else {
-            // collectionView
+            handleCharacterOrEpisodePagination(scrollView: scrollView)
         }
     }
     private func handleCharacterOrEpisodePagination(scrollView: UIScrollView) {
+        guard let viewModel = viewModel,
+              !collectionViewCellViewModels.isEmpty,
+              viewModel.shouldShowLoadMoreIndicator,
+              !viewModel.isLoadingMoreResults else {
+            return
+        }
 
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
+            let offset = scrollView.contentOffset.y
+            let totalContentHeight = scrollView.contentSize.height
+            let totalScrollViewFixedHeight = scrollView.frame.size.height
+
+            if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
+                viewModel.fetchAddtionalResults { [weak self] newResults in
+//                    self?.collectionView.tableFooterView = nil
+                    self?.collectionViewCellViewModels = newResults
+                    print("Should add more result cells for search results: \(newResults.count)")
+                }
+            }
+            t.invalidate()
+        }
     }
 
     private func handleLocationPagination(scrollView: UIScrollView) {
@@ -238,7 +282,7 @@ extension RMSearchResultView: UIScrollViewDelegate {
 
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 DispatchQueue.main.async {
-                    self?.showLoadingIndicator()
+                    self?.showTableLoadingIndicator()
                 }
                 viewModel.fetchAddtionalLocations { [weak self] newResults in
                     // Refresh table
@@ -251,7 +295,7 @@ extension RMSearchResultView: UIScrollViewDelegate {
         }
     }
 
-    private func showLoadingIndicator() {
+    private func showTableLoadingIndicator() {
         let footer = RMTableLoadingFooterView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 100))
         tableView.tableFooterView = footer
     }
