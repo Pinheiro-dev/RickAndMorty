@@ -37,3 +37,7 @@ extension UIView {
         }
     }
 }
+
+extension UIDevice {
+    static let isIphone = UIDevice.current.userInterfaceIdiom == .phone
+}

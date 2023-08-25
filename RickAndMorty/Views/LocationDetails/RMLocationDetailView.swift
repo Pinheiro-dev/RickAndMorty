@@ -129,24 +129,24 @@ extension RMLocationDetailView {
     private func createCharacterLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(0.5),
+                widthDimension: .fractionalWidth(UIDevice.isIphone ? 0.5 : 0.25),
                 heightDimension: .fractionalHeight(1.0)
             )
         )
         item.contentInsets = NSDirectionalEdgeInsets(top: 5,
                                                      leading: 10,
                                                      bottom: 5,
-                                                     trailing: 5)
+                                                     trailing: UIDevice.isIphone ? 5 : 10)
 
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(0.9),
-                heightDimension: .absolute(260)
+                widthDimension: .fractionalWidth(UIDevice.isIphone ? 0.9 : 1.0),
+                heightDimension: .absolute(UIDevice.isIphone ? 260 : 320)
             ),
-            subitems: [item]
+            subitems: UIDevice.isIphone ? [item] : [item, item, item, item]
         )
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior =  UIDevice.isIphone ? .groupPaging : .none
         return section
     }
 }
