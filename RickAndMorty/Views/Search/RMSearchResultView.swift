@@ -9,6 +9,8 @@ import UIKit
 
 protocol RMSearchResulsViewDelegate: AnyObject {
     func rmSearchResultView(_ resultsView: RMSearchResultView, didTapLocationAt index: Int)
+    func rmSearchResultView(_ resultsView: RMSearchResultView, didTapCharacterAt index: Int)
+    func rmSearchResultView(_ resultsView: RMSearchResultView, didTapEpisodeAt index: Int)
 }
 
 /// Shows search results UI (table or collection as needed)
@@ -34,7 +36,7 @@ final class RMSearchResultView: UIView {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isHidden = true
@@ -184,11 +186,16 @@ extension RMSearchResultView:  UICollectionViewDataSource, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let currentViewModel = collectionViewCellViewModels[indexPath.row]
-        if currentViewModel is RMCharacterCollectionViewCellViewModel { // Character
-
-        } else { // Episode
-
+        guard let viewModel = viewModel else {
+            return
+        }
+        switch viewModel.results {
+            case .characters:
+                delegate?.rmSearchResultView(self, didTapCharacterAt: indexPath.row)
+            case .episodes:
+                delegate?.rmSearchResultView(self, didTapEpisodeAt: indexPath.row)
+            case .locations:
+                break
         }
     }
 
