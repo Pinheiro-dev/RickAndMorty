@@ -11,30 +11,39 @@ import UIKit
 final class RMCharacterViewController: UIViewController {
 
     private let characterListView = RMCharacterListView()
+    private let viewModel = RMCharacterListViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        title = "Characters"
-        characterListView.delegate = self
-        setupView()
-        setupLayot()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
                                                             target: self,
                                                             action: #selector(didTapSearch))
+        view.backgroundColor = .systemBackground
+        title = "Characters"
+        setupView()
+        setupLayot()
+        setupCollectionView()
+
+        viewModel.delegate = self
+        viewModel.fetchCharacters()
     }
 
-    func setupView() {
+    private func setupView() {
         view.addSubview(characterListView)
     }
 
-    func setupLayot() {
+    private func setupLayot() {
         NSLayoutConstraint.activate([
             characterListView.topAnchor.constraint(equalTo: view.topAnchor),
             characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             characterListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+
+    private func setupCollectionView() {
+        characterListView.collectionView.dataSource = viewModel
+        characterListView.collectionView.delegate = viewModel
     }
 
     @objc
@@ -46,15 +55,21 @@ final class RMCharacterViewController: UIViewController {
     
 }
 
-// MARK: - RMCharacterListViewDelegate
+// MARK: - RMCharacterListViewModelDelegate
 
-extension RMCharacterViewController: RMCharacterListViewDelegate {
-    func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {
-        // Open detail controller for that character
-        let viewModel = RMCharacterDetailViewViewModel(character: character)
-        let detailVC = RMCharacterDetailViewController(viewModel: viewModel)
-        detailVC.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(detailVC, animated: true)
+extension RMCharacterViewController: RMCharacterListViewModelDelegate {
+    func didSelectCharacter(_ character: RMCharacter) {
+        let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
+    func didLoadInitialCharacters() {
+        self.characterListView.loadInitialCharacters()
+    }
+
+    func didLoadMoreCharacters(with newIndexPaths: [IndexPath]) {
+        self.characterListView.loadMoreCharacters(with: newIndexPaths)
     }
 
 }

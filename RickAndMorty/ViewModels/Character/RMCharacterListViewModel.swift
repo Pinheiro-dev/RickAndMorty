@@ -1,5 +1,5 @@
 //
-//  RMCharacterListViewViewModel.swift
+//  RMCharacterListViewModel.swift
 //  RickAndMorty
 //
 //  Created by mathues barbosa on 03/01/23.
@@ -7,25 +7,27 @@
 
 import UIKit
 
-protocol RMCharacterListViewViewModelDelegate: AnyObject {
+protocol RMCharacterListViewModelDelegate: AnyObject {
     func didLoadInitialCharacters()
     func didLoadMoreCharacters(with newIndexPaths: [IndexPath])
     func didSelectCharacter(_ character: RMCharacter)
 }
 
 /// View Model to handle character list view logic
-final class RMCharacterListViewViewModel: NSObject {
+final class RMCharacterListViewModel: NSObject {
 
-    public weak var delegate: RMCharacterListViewViewModelDelegate?
+    public weak var delegate: RMCharacterListViewModelDelegate?
 
     private var isLoadingMoreCharacters = false
 
     private var characters: [RMCharacter] = [] {
         didSet {
             for character in characters {
-                let viewModel = RMCharacterCollectionViewCellViewModel(characterName: character.name,
-                                                                       characterStatus: character.status,
-                                                                       characterImageUrl: URL(string: character.image))
+                let viewModel = RMCharacterCollectionViewCellViewModel(
+                    characterName: character.name,
+                    characterStatus: character.status,
+                    characterImageUrl: URL(string: character.image)
+                )
                 if !cellViewModels.contains(viewModel){
                     cellViewModels.append(viewModel)
                 }
@@ -37,6 +39,9 @@ final class RMCharacterListViewViewModel: NSObject {
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
 
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
+
+
+    //MARK: - Public func
 
     /// Fetch inital set of charactes (20)
     public func fetchCharacters() {
@@ -71,7 +76,7 @@ final class RMCharacterListViewViewModel: NSObject {
         }
 
         RMService.shared.execute(request, expecting: RMGetAllCharactersResponse.self) { [weak self] result in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
 
@@ -79,24 +84,24 @@ final class RMCharacterListViewViewModel: NSObject {
                 case .success(let responseModel):
                     let moreResults = responseModel.results
                     let info = responseModel.info
-                    strongSelf.apiInfo = info
+                    self.apiInfo = info
 
-                    let originalCount = strongSelf.characters.count
+                    let originalCount = self.characters.count
                     let newCount = moreResults.count
                     let total = originalCount+newCount
                     let startingIndex = total - newCount
                     let indexPathToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
                         return IndexPath(row: $0, section: 0)
                     })
-                    strongSelf.characters.append(contentsOf: moreResults)
+                    self.characters.append(contentsOf: moreResults)
 
                     DispatchQueue.main.async {
-                        strongSelf.delegate?.didLoadMoreCharacters(with: indexPathToAdd)
-                        strongSelf.isLoadingMoreCharacters = false
+                        self.delegate?.didLoadMoreCharacters(with: indexPathToAdd)
+                        self.isLoadingMoreCharacters = false
                     }
                 case .failure(let failure):
                     print(String(describing: failure))
-                    self?.isLoadingMoreCharacters = false
+                    self.isLoadingMoreCharacters = false
             }
         }
     }
@@ -108,7 +113,7 @@ final class RMCharacterListViewViewModel: NSObject {
 
 // MARK: - CollectionView
 
-extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.cellViewModels.count
     }
@@ -172,7 +177,7 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
 }
 
 // MARK: - ScrollView
-extension RMCharacterListViewViewModel: UIScrollViewDelegate {
+extension RMCharacterListViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator,
               !isLoadingMoreCharacters,
