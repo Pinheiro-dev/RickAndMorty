@@ -1,5 +1,5 @@
 //
-//  RMEpisodeListViewViewModel.swift
+//  RMEpisodeListViewModel.swift
 //  RickAndMorty
 //
 //  Created by mathues barbosa on 20/01/23.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol RMEpisodeListViewViewModelDelegate: AnyObject {
+protocol RMEpisodeListViewModelDelegate: AnyObject {
     func didLoadInitialEpisodes()
     func didLoadMoreEpisodes(with newIndexPaths: [IndexPath])
     func didSelectEpisode(_ episode: RMEpisode)
 }
 
 /// View Model to handle episode list view logic
-final class RMEpisodeListViewViewModel: NSObject {
+final class RMEpisodeListViewModel: NSObject {
 
-    public weak var delegate: RMEpisodeListViewViewModelDelegate?
+    public weak var delegate: RMEpisodeListViewModelDelegate?
 
     private var isLoadingMoreEpisodes = false
 
@@ -73,7 +73,7 @@ final class RMEpisodeListViewViewModel: NSObject {
         }
 
         RMService.shared.execute(request, expecting: RMGetAllEpisodesResponse.self) { [weak self] result in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
 
@@ -81,24 +81,24 @@ final class RMEpisodeListViewViewModel: NSObject {
                 case .success(let responseModel):
                     let moreResults = responseModel.results
                     let info = responseModel.info
-                    strongSelf.apiInfo = info
+                    self.apiInfo = info
 
-                    let originalCount = strongSelf.episodes.count
+                    let originalCount = self.episodes.count
                     let newCount = moreResults.count
                     let total = originalCount+newCount
                     let startingIndex = total - newCount
                     let indexPathToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
                         return IndexPath(row: $0, section: 0)
                     })
-                    strongSelf.episodes.append(contentsOf: moreResults)
+                    self.episodes.append(contentsOf: moreResults)
 
                     DispatchQueue.main.async {
-                        strongSelf.delegate?.didLoadMoreEpisodes(with: indexPathToAdd)
-                        strongSelf.isLoadingMoreEpisodes = false
+                        self.delegate?.didLoadMoreEpisodes(with: indexPathToAdd)
+                        self.isLoadingMoreEpisodes = false
                     }
                 case .failure(let failure):
                     print(String(describing: failure))
-                    self?.isLoadingMoreEpisodes = false
+                    self.isLoadingMoreEpisodes = false
             }
         }
     }
@@ -110,7 +110,7 @@ final class RMEpisodeListViewViewModel: NSObject {
 
 // MARK: - CollectionView
 
-extension RMEpisodeListViewViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension RMEpisodeListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.cellViewModels.count
     }
@@ -167,7 +167,7 @@ extension RMEpisodeListViewViewModel: UICollectionViewDataSource, UICollectionVi
 }
 
 // MARK: - ScrollView
-extension RMEpisodeListViewViewModel: UIScrollViewDelegate {
+extension RMEpisodeListViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator,
               !isLoadingMoreEpisodes,

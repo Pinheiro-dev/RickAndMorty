@@ -7,16 +7,8 @@
 
 import UIKit
 
-protocol RMEpisodeListViewDelegate: AnyObject {
-    func rmEpisodeListView(_ episodeListView: RMEpisodeListView, didSelectEpisode episode: RMEpisode)
-}
-
 /// View that handles showing list of episodes, loader, etc.
 final class RMEpisodeListView: UIView {
-
-    public weak var delegate: RMEpisodeListViewDelegate?
-
-    private let viewModel = RMEpisodeListViewViewModel()
 
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -25,7 +17,7 @@ final class RMEpisodeListView: UIView {
         return spinner
     }()
 
-    private let collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
@@ -49,9 +41,6 @@ final class RMEpisodeListView: UIView {
         self.addConstraints()
 
         self.spinner.startAnimating()
-        self.viewModel.delegate = self
-        self.viewModel.fetchEpisodes()
-        self.setupCollectionView()
     }
 
     required init?(coder: NSCoder) {
@@ -76,29 +65,18 @@ final class RMEpisodeListView: UIView {
         ])
     }
 
-    private func setupCollectionView() {
-        self.collectionView.dataSource = self.viewModel
-        self.collectionView.delegate = self.viewModel
-    }
-
-}
-
-extension RMEpisodeListView: RMEpisodeListViewViewModelDelegate {
-    func didSelectEpisode(_ episode: RMEpisode) {
-        delegate?.rmEpisodeListView(self, didSelectEpisode: episode)
-    }
-
-    func didLoadInitialEpisodes() {
-        self.spinner.stopAnimating()
-        self.collectionView.isHidden = false
-        self.collectionView.reloadData()
+    //MARK: - Public func
+    public func loadInitialEpisodes() {
+        spinner.stopAnimating()
+        collectionView.isHidden = false
+        collectionView.reloadData()
 
         UIView.animate(withDuration: 0.4) {
             self.collectionView.alpha = 1
         }
     }
 
-    func didLoadMoreEpisodes(with newIndexPaths: [IndexPath]) {
+    func loadMoreEpisodes(with newIndexPaths: [IndexPath]) {
         collectionView.performBatchUpdates {
             self.collectionView.insertItems(at: newIndexPaths)
         }

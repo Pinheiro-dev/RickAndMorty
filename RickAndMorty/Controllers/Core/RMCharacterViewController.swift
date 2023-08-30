@@ -21,7 +21,7 @@ final class RMCharacterViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "Characters"
         setupView()
-        setupLayot()
+        addConstraints()
         setupCollectionView()
 
         viewModel.delegate = self
@@ -32,7 +32,7 @@ final class RMCharacterViewController: UIViewController {
         view.addSubview(characterListView)
     }
 
-    private func setupLayot() {
+    private func addConstraints() {
         NSLayoutConstraint.activate([
             characterListView.topAnchor.constraint(equalTo: view.topAnchor),
             characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
