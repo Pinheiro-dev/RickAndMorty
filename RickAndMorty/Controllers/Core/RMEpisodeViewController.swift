@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol RMEpisodeViewControllerDelegate: AnyObject {
+    func didLoadInitialEpisodes()
+    func didLoadMoreEpisodes(with newIndexPaths: [IndexPath])
+    func didSelectEpisode(_ episode: RMEpisode)
+}
+
 /// Controller to show and search for Episodes
 final class RMEpisodeViewController: UIViewController {
 
-    private let episodeListView = RMEpisodeListView()
-    private let viewModel = RMEpisodeListViewModel()
+    private let customView = RMEpisodeListView()
+    private let viewModel: RMEpisodeViewModelDelegate = RMEpisodeViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,26 +30,26 @@ final class RMEpisodeViewController: UIViewController {
         addConstraints()
         setupCollectionView()
 
-        viewModel.delegate = self
+        viewModel.setDelegate(self)
         viewModel.fetchEpisodes()
     }
 
     private func setUpView() {
-        view.addSubview(episodeListView)
+        view.addSubview(customView)
     }
 
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            episodeListView.topAnchor.constraint(equalTo: view.topAnchor),
-            episodeListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            episodeListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            episodeListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            customView.topAnchor.constraint(equalTo: view.topAnchor),
+            customView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            customView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            customView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 
     private func setupCollectionView() {
-        episodeListView.collectionView.dataSource = self.viewModel
-        episodeListView.collectionView.delegate = self.viewModel
+        customView.collectionView.dataSource = self.viewModel.getInstance()
+        customView.collectionView.delegate = self.viewModel.getInstance()
     }
     @objc
     private func didTapSearch() {
@@ -54,9 +60,9 @@ final class RMEpisodeViewController: UIViewController {
 
 }
 
-// MARK: - RMEpisodeListViewModelDelegate
+// MARK: - RMEpisodeViewControllerDelegate
 
-extension RMEpisodeViewController: RMEpisodeListViewModelDelegate {
+extension RMEpisodeViewController: RMEpisodeViewControllerDelegate {
     func didSelectEpisode(_ episode: RMEpisode) {
         let vc = RMEpisodeDetailViewController(url: URL(string: episode.url))
         vc.navigationItem.largeTitleDisplayMode = .never
@@ -64,11 +70,11 @@ extension RMEpisodeViewController: RMEpisodeListViewModelDelegate {
     }
 
     func didLoadInitialEpisodes() {
-        self.episodeListView.loadInitialEpisodes()
+        self.customView.loadInitialEpisodes()
     }
 
     func didLoadMoreEpisodes(with newIndexPaths: [IndexPath]) {
-        self.episodeListView.loadMoreEpisodes(with: newIndexPaths)
+        self.customView.loadMoreEpisodes(with: newIndexPaths)
     }
 
 }
