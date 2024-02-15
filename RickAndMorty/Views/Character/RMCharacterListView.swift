@@ -9,7 +9,7 @@ import UIKit
 
 /// View that handles showing list of characters, loader, etc.
 final class RMCharacterListView: UIView {
-    private let spinner: UIActivityIndicatorView = {
+    let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
         spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -63,23 +63,4 @@ final class RMCharacterListView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-
-    //MARK: - Public func
-
-    public func loadInitialCharacters() {
-        spinner.stopAnimating()
-        collectionView.isHidden = false
-        collectionView.reloadData()
-
-        UIView.animate(withDuration: 0.4) {
-            self.collectionView.alpha = 1
-        }
-    }
-
-    public func loadMoreCharacters(with newIndexPaths: [IndexPath]) {
-        collectionView.performBatchUpdates {
-            self.collectionView.insertItems(at: newIndexPaths)
-        }
-    }
-
 }
