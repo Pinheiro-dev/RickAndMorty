@@ -10,7 +10,7 @@ import UIKit
 /// View that handles showing list of episodes, loader, etc.
 final class RMEpisodeListView: UIView {
 
-    private let spinner: UIActivityIndicatorView = {
+    let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
         spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -64,22 +64,4 @@ final class RMEpisodeListView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-
-    //MARK: - Public func
-    public func loadInitialEpisodes() {
-        spinner.stopAnimating()
-        collectionView.isHidden = false
-        collectionView.reloadData()
-
-        UIView.animate(withDuration: 0.4) {
-            self.collectionView.alpha = 1
-        }
-    }
-
-    func loadMoreEpisodes(with newIndexPaths: [IndexPath]) {
-        collectionView.performBatchUpdates {
-            self.collectionView.insertItems(at: newIndexPaths)
-        }
-    }
-
 }

@@ -70,11 +70,22 @@ extension RMEpisodeViewController: RMEpisodeViewControllerDelegate {
     }
 
     func didLoadInitialEpisodes() {
-        self.customView.loadInitialEpisodes()
+        customView.spinner.stopAnimating()
+        customView.collectionView.isHidden = false
+        customView.collectionView.reloadData()
+
+        UIView.animate(withDuration: 0.4) {
+            self.customView.collectionView.alpha = 1
+        }
     }
 
     func didLoadMoreEpisodes(with newIndexPaths: [IndexPath]) {
-        self.customView.loadMoreEpisodes(with: newIndexPaths)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.customView.collectionView.performBatchUpdates {
+                self.customView.collectionView.insertItems(at: newIndexPaths)
+            }
+        }
     }
 
 }
