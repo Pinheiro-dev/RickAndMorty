@@ -7,16 +7,20 @@
 
 import UIKit
 
-protocol RMCharacterListViewModelDelegate: AnyObject {
-    func didLoadInitialCharacters()
-    func didLoadMoreCharacters(with newIndexPaths: [IndexPath])
-    func didSelectCharacter(_ character: RMCharacter)
+protocol RMCharacterViewModelDelegate: AnyObject {
+    func getInstance() -> NSObject & UICollectionViewDataSource & UICollectionViewDelegate
+    func setDelegate(_ delegate: RMCharacterViewControllerDelegate?)
+    /// Fetch inital set of charactes (20)
+    func fetchCharacters()
+    /// Paginate if additional characters are needed
+    func fetchAddtionalCharacters(url: URL)
+    var shouldShowLoadMoreIndicator: Bool { get }
 }
 
 /// View Model to handle character list view logic
-final class RMCharacterListViewModel: NSObject {
+final class RMCharacterViewModel: NSObject, RMCharacterViewModelDelegate {
 
-    public weak var delegate: RMCharacterListViewModelDelegate?
+    public weak var delegate: RMCharacterViewControllerDelegate?
 
     private var isLoadingMoreCharacters = false
 
@@ -41,10 +45,17 @@ final class RMCharacterListViewModel: NSObject {
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
 
 
-    //MARK: - Public func
+    //MARK: - Actions
+    
+    func getInstance() -> NSObject & UICollectionViewDataSource & UICollectionViewDelegate {
+        return self
+    }
+    
+    func setDelegate(_ delegate: RMCharacterViewControllerDelegate?) {
+        self.delegate = delegate
+    }
 
-    /// Fetch inital set of charactes (20)
-    public func fetchCharacters() {
+    func fetchCharacters() {
         RMService.shared.execute(.listCharactersRequests,
                                  expecting: RMGetAllCharactersResponse.self,
                                  completion: { [weak self] result in
@@ -63,8 +74,7 @@ final class RMCharacterListViewModel: NSObject {
         })
     }
 
-    /// Paginate if additional characters are needed
-    public func fetchAddtionalCharacters(url: URL) {
+    func fetchAddtionalCharacters(url: URL) {
         guard !isLoadingMoreCharacters else {
             return
         }
@@ -106,14 +116,14 @@ final class RMCharacterListViewModel: NSObject {
         }
     }
 
-    public var shouldShowLoadMoreIndicator: Bool {
+    var shouldShowLoadMoreIndicator: Bool {
         return apiInfo?.next != nil
     }
 }
 
 // MARK: - CollectionView
 
-extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension RMCharacterViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.cellViewModels.count
     }
@@ -177,7 +187,7 @@ extension RMCharacterListViewModel: UICollectionViewDataSource, UICollectionView
 }
 
 // MARK: - ScrollView
-extension RMCharacterListViewModel: UIScrollViewDelegate {
+extension RMCharacterViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator,
               !isLoadingMoreCharacters,

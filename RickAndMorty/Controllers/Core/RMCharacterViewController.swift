@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol RMCharacterViewControllerDelegate: AnyObject {
+    func didLoadInitialCharacters()
+    func didLoadMoreCharacters(with newIndexPaths: [IndexPath])
+    func didSelectCharacter(_ character: RMCharacter)
+}
+
 /// Controller to show and search for Characters
 final class RMCharacterViewController: UIViewController {
 
-    private let characterListView = RMCharacterListView()
-    private let viewModel = RMCharacterListViewModel()
+    private let customView = RMCharacterListView()
+    private let viewModel: RMCharacterViewModelDelegate = RMCharacterViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,26 +30,26 @@ final class RMCharacterViewController: UIViewController {
         addConstraints()
         setupCollectionView()
 
-        viewModel.delegate = self
+        viewModel.setDelegate(self)
         viewModel.fetchCharacters()
     }
 
     private func setupView() {
-        view.addSubview(characterListView)
+        view.addSubview(customView)
     }
 
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            characterListView.topAnchor.constraint(equalTo: view.topAnchor),
-            characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            characterListView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            customView.topAnchor.constraint(equalTo: view.topAnchor),
+            customView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            customView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            customView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 
     private func setupCollectionView() {
-        characterListView.collectionView.dataSource = viewModel
-        characterListView.collectionView.delegate = viewModel
+        customView.collectionView.dataSource = viewModel.getInstance()
+        customView.collectionView.delegate = viewModel.getInstance()
     }
 
     @objc
@@ -55,9 +61,9 @@ final class RMCharacterViewController: UIViewController {
     
 }
 
-// MARK: - RMCharacterListViewModelDelegate
+// MARK: - RMCharacterViewControllerDelegate
 
-extension RMCharacterViewController: RMCharacterListViewModelDelegate {
+extension RMCharacterViewController: RMCharacterViewControllerDelegate {
     func didSelectCharacter(_ character: RMCharacter) {
         let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
         vc.navigationItem.largeTitleDisplayMode = .never
@@ -65,11 +71,11 @@ extension RMCharacterViewController: RMCharacterListViewModelDelegate {
     }
 
     func didLoadInitialCharacters() {
-        self.characterListView.loadInitialCharacters()
+        self.customView.loadInitialCharacters()
     }
 
     func didLoadMoreCharacters(with newIndexPaths: [IndexPath]) {
-        self.characterListView.loadMoreCharacters(with: newIndexPaths)
+        self.customView.loadMoreCharacters(with: newIndexPaths)
     }
 
 }
